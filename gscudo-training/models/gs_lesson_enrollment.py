@@ -1,4 +1,5 @@
 from odoo import fields, models, api
+from odoo.exceptions import UserError
 
 
 class GSLessonEnrollment(models.Model):
@@ -126,6 +127,23 @@ class GSLessonEnrollment(models.Model):
                         "attended_hours": attended_hours,
                     }
                 )
+
+    is_absence_mail_sent = fields.Boolean("Email assenza inviata", default=False)
+
+    def send_absence_email(self):
+        """
+        Send an email to the absent worker.
+        """
+        # TODO misc sanity checks
+        if self.is_attendant:
+            raise UserError("Il lavoratore era presente")
+        if self.is_absence_mail_sent:
+            raise UserError("Assenza già notificata.")
+        if self.gs_worker_id.contract_partner_id.email is False:
+            raise UserError(f"Mail mancante per {self.gs_worker_id.name}")
+        mail_template = self.env.ref("gscudo-training.absence_mail_template")
+        mail_template.send_mail(self.id)
+        self.is_absence_mail_sent = True
 
 
 class GSCourseLesson(models.Model):

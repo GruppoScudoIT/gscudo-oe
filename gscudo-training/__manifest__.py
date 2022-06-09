@@ -11,10 +11,11 @@
     "website": "http://www.grupposcudo.it",
     "category": "GruppoScudo",
     "version": "14.0.1.14",
-    "depends": ["base", "sale", "gscudo-oe"],
+    "depends": ["base", "sale", "gscudo-oe", "mail"],
     "data": [
         "security/security_groups.xml",
         "security/ir.model.access.csv",
+        "data/mail_template.xml",
         "views/gs_course_type_module_wizard_views.xml",
         "views/gs_course_enrollment_wizard_views.xml",
         "views/gs_lesson_enrollment_wizard_views.xml",

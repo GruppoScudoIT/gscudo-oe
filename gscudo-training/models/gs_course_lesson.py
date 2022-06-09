@@ -83,7 +83,30 @@ class GSCourseLesson(models.Model):
                 ):
                     child.teacher_partner_id = vals["teacher_partner_id"]
 
-        return super().write(vals)
+            # FIXME finish this
+
+            # get diff
+            # new_values = {}
+            # if vals.get("start_time"):
+            #     new_values["start_time"] = vals.get("start_time")
+            # if vals.get("location_partner_id"):
+            #     new_values["location_partner_id"] = self.env["res.partner"].search(
+            #         [("id", "=", vals.get("location_partner_id"))]
+            #     )
+
+            # if new_values:
+            #     mail_template = self.env.ref("gscudo-training.lesson_change_mail_template")
+            #     for enrollment in lesson.gs_worker_ids:
+            #         mail_template.with_context(
+            #             **{
+            #                 "sendto": enrollment.gs_worker_id.contract_partner_id.email,
+            #                 **new_values,
+            #             }
+            #         ).send_mail(lesson.id)
+
+        _r = super().write(vals)
+
+        return _r
 
     def attend_all(self):
         """
@@ -167,6 +190,15 @@ class GSCourseLesson(models.Model):
         if self.is_closed:
             raise UserError("Questa lezione è già chiusa.")
         self.is_closed = True
+
+    def send_absence_emails(self):
+        """
+        Sends notification emails for absent workers.
+        """
+        self.ensure_one()
+        for enrollment in self.gs_worker_ids:
+            if not enrollment.is_attendant and not enrollment.is_absence_mail_sent:
+                enrollment.send_absence_email()
 
 
 class GSCourse(models.Model):

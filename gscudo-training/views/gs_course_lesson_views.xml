@@ -10,8 +10,8 @@
                         <field name="name" />
                         <field name="state" />
                         <field name="parent_lesson_id" />
-                        <field name="gs_course_id" readonly="1"/>
-                        <field name="gs_course_type_id" readonly="1"/>
+                        <field name="gs_course_id" readonly="1" />
+                        <field name="gs_course_type_id" readonly="1" />
                     </group>
                     <group>
                         <field name="location_partner_id" />
@@ -38,6 +38,11 @@
                             name="close_lesson"
                             type="object"
                             string="Chiudi lezione"
+                        />
+                        <button 
+                            name="send_absence_emails"
+                            type="object"
+                            string="Invia mail di assenza"
                         />
                     </group>
                     <group>
