@@ -19,7 +19,7 @@ class GSCourseTypeModuleWizard(models.TransientModel):
 
     sequence = fields.Integer(string="Sequenza", default=0)
     duration = fields.Float(string="Durata in ore")
-    generate_certificate = fields.Boolean(string="Genera Attestato", default=False)
+    generate_certificate = fields.Boolean(string="Test finale", default=False)
     elearning = fields.Boolean(string="Modalità elearning")
     module_required_ids = fields.Many2many(
         comodel_name="gs_course_type_module",
@@ -57,11 +57,11 @@ class GSCourseTypeModuleWizard(models.TransientModel):
                 "active": self.active,
                 "content": self.content,
                 "note": self.note,
-                "gs_course_type_id": self.gs_course_type_id.id,
+                "gs_course_type_id": [(4, self.gs_course_type_id.id)],
                 "sequence": self.sequence,
                 "duration": self.duration,
                 "generate_certificate": self.generate_certificate,
                 "elearning": self.elearning,
-                "module_required_ids": [(6, 0, self.module_required_ids.ids)],
+                # "module_required_ids": [(6, 0, self.module_required_ids.ids)],
             }
         )

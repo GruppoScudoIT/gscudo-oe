@@ -11,11 +11,11 @@
                         <field name="gs_course_type_id" />
                         <field name="content" />
                         <field name="duration" widget="float_time" />
-                        <field name="remaining_hours" />
+                        <field name="remaining_hours" widget="float_time" />
                         <field name="generate_certificate" widget="boolean_toggle" />
                         <field name="elearning" widget="boolean_toggle" />
                         <field name="note" />
-                        <field name="module_required_ids" />
+                        <!-- <field name="module_required_ids" /> -->
                     </group>
                 </sheet>
                 <footer>
@@ -31,7 +31,8 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">gs_course_type_module_wizard</field>
         <field name="view_mode">form</field>
-        <field name="target">new</field>     
+        <field name="target">new</field>
+        <field name="context">{"default_gs_course_type_id": active_id}</field>
         <field name="view_id" ref="gs_course_type_module_wizard_view_form"/>
         <field name="binding_model_id" ref="model_gs_course_type"/>
     </record>
