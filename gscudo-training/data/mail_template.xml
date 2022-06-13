@@ -5,13 +5,13 @@
         <field name="model_id" ref="model_gs_lesson_enrollment" />
         <field name="auto_delete" eval="False" />
         <field name="email_from">formazione@grupposcudo.it</field>
-        <field name="email_to">${object.gs_worker_id.contract_partner_id.email}</field>
+        <field name="email_to">${object.gs_worker_id.contract_partner_id.email | safe}</field>
         <field name="subject">Assenza lezione ${object.gs_course_lesson_id.name | safe}</field>
         <field name="body_html">
             <![CDATA[
                 <p>
-                    Questa mail informa che ${object.gs_worker_id.name | safe}
-                    non era presente alla lezione in data ${object.gs_course_lesson_id.start_time | safe}.
+                    Questa mail informa che ${object.gs_worker_id.name}
+                    non era presente alla lezione in data ${object.gs_course_lesson_id.start_time}.
                 </p>
                 <br>
                 <p>Saluti,</p>
@@ -26,13 +26,13 @@
         <field name="auto_delete" eval="False" />
         <field name="email_from">formazione@grupposcudo.it</field>
         <field name="email_to">
-            ${ctx.get(sendto)}
+            ${ctx.get(sendto) | safe}
         </field>
         <field name="subject">Modifica lezione ${object.name | safe}</field>
         <field name="body_html">
             <![CDATA[
                 <p>
-                    Questa mail informa che la lezione ${object.name | safe},
+                    Questa mail informa che la lezione ${object.name},
                     pianificata per il ${object.start_date} in sede ${object.location_partner_id.name},
                     si svolgerà invece il ${ctx.get("start_date", object.start_date)}
                     in sede ${ctx.get(location_partner_id).name, object.location_partner_id.name}.
